@@ -1,0 +1,17 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "MAP TANA",
+  "short_name": "MAP TANA",
+  "version": "io.cordova.hellocordova",
+  "description": "Map tana est un application de map pour un projet de revolution à madagascar.",
+  "author": "Jimmy Samuel ANDRIAMPARANY",
+  "icons": [
+    {
+      "src": "icon.png",
+      "type": "image/png",
+      "sizes": "180x180"
+    }
+  ],
+  "start_url": "index.html"
+}

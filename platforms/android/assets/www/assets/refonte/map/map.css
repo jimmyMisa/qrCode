@@ -1,0 +1,18 @@
+.gmnoprint>div{
+  background: none !important;
+  box-shadow: none !important;
+}
+.gmnoprint>div>div>div{
+  display: none !important;
+}
+
+
+.gmnoprint *[aria-label="Zoom in"],
+.gmnoprint *[aria-label="Zoom out"]{
+  border-radius: 100% !important;
+  background-color: #FFF !important;
+  box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.5) !important;
+}
+.gmnoprint *[aria-label="Zoom out"]{
+  top:10px !important;
+}
