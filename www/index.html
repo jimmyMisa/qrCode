@@ -73,7 +73,7 @@ function handleImage(e){
     //
     function onDeviceReady() {
     	debug("device ready");
-        window.requestFileSystem(LocalFileSystem.PERSISTENT, 5*1024*1024, gotFS, fail);
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
     }
 
     function gotFS(fileSystem) {
@@ -104,7 +104,7 @@ function handleImage(e){
         
         
     	debug("writting");
-        window.requestFileSystem(LocalFileSystem.PERSISTENT, 1*1024*1024, function(fs) {
+        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fs) {
             fs.root.getFile("kkzl.txt", {read: true}, function(fe)
             {
                 fe.file(function(f) {
