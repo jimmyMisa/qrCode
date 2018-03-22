@@ -10,7 +10,7 @@
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "dependencies": {
-    "cordova-android": "^5.0.0",
+    "cordova-android": "^5.2.2",
     "cordova-plugin-android-permissions": "^0.10.0",
     "cordova-plugin-app-event": "^1.2.1",
     "cordova-plugin-device": "^2.0.1",
