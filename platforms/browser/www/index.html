@@ -90,7 +90,7 @@ function handleImage(e){
         writer.onwriteend = function(evt) {
     		debug("wrotten");
             console.log("1 contents of file now 'some sample text'");
-            writer.truncate(11);  
+            //writer.truncate(11);  
             writer.onwriteend = function(evt) {
                 console.log("2 contents of file now 'some sample'");
                 writer.seek(4);
