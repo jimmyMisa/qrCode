@@ -22,63 +22,6 @@
 
 
 
- <script src="js/jquery-1.10.2.min.js"></script>   <!-jquery-1.10.2.min is the name of my file>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript">
-
-            var fileObject;
-            document.addEventListener("deviceready", onDeviceReady, true);
-            function onDeviceReady() 
-           {
-              window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,onFileSystemSuccess, fail);
-            }
-            
-            function onFileSystemSuccess(fileSystem) {
-                fileSystem.root.getFile("readme_sk.txt",
-                {create: true, exclusive: false},
-                gotFileEntry, fail);
-              }
-         	function gotFileEntry(fileEntry) {
-                fileObject = fileEntry;
-                $('#saveFile_btn').on('click', function() {
-                    saveFileContent();
-                });
-            }
-
-function saveFileContent() {
-                fileObject.createWriter(gotFileWriter, fail);
-            }
-            
-            function gotFileWriter(writer) {
-                var myText = document.getElementById('my_text').value;
-                writer.write(myText);
-                writer.onwriteend = function(evt) {
-                $('#message').html('<p>File contents have been written.<br /><strong>File path:</strong> ' + fileObject.fullPath + '</p>');
-                    var reader = new FileReader();
-                    console.log(fileObject);
-                    reader.readAsText(fileObject);
-                    reader.onload = function(evt) {
-                        $('#contents').html('<strong>File contents:</strong> <br />'
-                            + evt.target.result);
-                    };
-                };
-            }
-
-
-function fail(error)
- {
-              	  alert(error.code);
-            }
-            </script>
-        	<input type="text" id="my_text" />
-        	<input type="button" id="saveFile_btn"
-               value="Save" />
-        	<div id="message"></div>
-        	<div id="contents"></div>
-
-
-
-
 <script>
 
 var imageLoader = document.getElementById('imageLoader');
@@ -104,3 +47,15 @@ function handleImage(e){
     reader.readAsDataURL(e.target.files[0]);     
 }
 </script>
+
+
+
+<br/>
+
+<script>
+document.addEventListener("deviceready", function(){
+      alert("123");
+ },true);
+
+</script>
+
