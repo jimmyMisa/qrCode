@@ -18,7 +18,17 @@
     },
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "com.rezoom.application"
+    },
+    "de.appplant.cordova.plugin.local-notification": {
+      "PACKAGE_NAME": "com.rezoom.application"
     }
   },
-  "dependent_plugins": {}
+  "dependent_plugins": {
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.rezoom.application"
+    },
+    "cordova-plugin-app-event": {
+      "PACKAGE_NAME": "com.rezoom.application"
+    }
+  }
 }
