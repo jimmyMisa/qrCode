@@ -24,10 +24,10 @@
     }
   },
   "dependent_plugins": {
-    "cordova-plugin-device": {
+    "cordova-plugin-app-event": {
       "PACKAGE_NAME": "com.rezoom.application"
     },
-    "cordova-plugin-app-event": {
+    "cordova-plugin-device": {
       "PACKAGE_NAME": "com.rezoom.application"
     }
   }
