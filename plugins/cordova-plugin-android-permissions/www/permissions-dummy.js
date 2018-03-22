@@ -1,4 +1,3 @@
-cordova.define("cordova-plugin-android-permissions.Permissions", function(require, exports, module) {
 var permissionsName = 'Permissions';
 
 function Permissions() {
@@ -164,7 +163,7 @@ function deprecated(name) {
 
 Permissions.prototype = {
     checkPermission: function(permission, successCallback, errorCallback) {
-        cordova.exec(successCallback, errorCallback, permissionsName, 'checkPermission', [permission]);
+        successCallback( {hasPermission: true} );
     },
     requestPermission: function(permission, successCallback, errorCallback) {
         if (typeof permission === "function") {
@@ -173,10 +172,10 @@ Permissions.prototype = {
             errorCallback = arguments[1];
             permission = arguments[2];
         }
-        cordova.exec(successCallback, errorCallback, permissionsName, 'requestPermission', [permission]);
+        successCallback( {hasPermission: true} );
     },
     requestPermissions: function(permissions, successCallback, errorCallback) {
-        cordova.exec(successCallback, errorCallback, permissionsName, 'requestPermissions', permissions);
+        successCallback( {hasPermission: true} );
     }
 };
 
@@ -193,5 +192,3 @@ Permissions.prototype.hasPermission = function (permission, successCallback, err
 };
 
 module.exports = new Permissions();
-
-});
