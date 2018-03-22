@@ -1,8 +1,8 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="io.cordova.hellocordova" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>MAP TANA</name>
+    <name>QR REZOOM</name>
     <description>
-       Map tana est un application de map pour un projet de revolution à madagascar.
+       REZZOM QR CODE
     </description>
     <author email="jimmysamuel_andriamparany@yahoo.com" href="http://cordova.io">
         Jimmy Samuel ANDRIAMPARANY

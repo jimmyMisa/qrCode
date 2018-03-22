@@ -74,9 +74,9 @@
     <feature name="MarkerCluster">
         <param name="android-package" value="plugin.google.maps.PluginMarkerCluster" />
     </feature>
-    <name>MAP TANA</name>
+    <name>QR REZOOM</name>
     <description>
-       Map tana est un application de map pour un projet de revolution à madagascar.
+       REZZOM QR CODE
     </description>
     <author email="jimmysamuel_andriamparany@yahoo.com" href="http://cordova.io">
         Jimmy Samuel ANDRIAMPARANY

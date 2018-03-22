@@ -1,10 +1,10 @@
 {
   "background_color": "#FFF",
   "display": "standalone",
-  "name": "MAP TANA",
-  "short_name": "MAP TANA",
+  "name": "QR REZOOM",
+  "short_name": "QR REZOOM",
   "version": "io.cordova.hellocordova",
-  "description": "Map tana est un application de map pour un projet de revolution à madagascar.",
+  "description": "REZZOM QR CODE",
   "author": "Jimmy Samuel ANDRIAMPARANY",
   "icons": [
     {
