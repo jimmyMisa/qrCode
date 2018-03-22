@@ -10,13 +10,17 @@
   "author": "Apache Cordova Team",
   "license": "Apache-2.0",
   "dependencies": {
+    "cordova-plugin-android-permissions": "^0.10.0",
     "cordova-plugin-file": "^6.0.1",
+    "cordova-plugin-file-transfer": "^1.7.1",
     "cordova-plugin-whitelist": "1"
   },
   "cordova": {
     "plugins": {
       "cordova-plugin-file": {},
-      "cordova-plugin-whitelist": {}
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-file-transfer": {},
+      "cordova-plugin-android-permissions": {}
     }
   }
 }
