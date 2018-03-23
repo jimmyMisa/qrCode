@@ -1,0 +1,12 @@
+<script>
+if (window.isSecureContext) {
+alert("secure");
+  // Page is a secure context so service workers are now available
+  /*navigator.serviceWorker.register("/offline-worker.js").then(function () {
+   
+  });
+  */
+  
+  console.log(StorageManager.estimate());
+}
+</script>

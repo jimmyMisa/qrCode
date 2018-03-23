@@ -12,12 +12,6 @@
     },
     "de.appplant.cordova.plugin.local-notification": {
       "PACKAGE_NAME": "com.rezoom.application"
-    },
-    "cordova-plugin-android-permissions": {
-      "PACKAGE_NAME": "com.rezoom.application"
-    },
-    "cordova-plugin-file-transfer": {
-      "PACKAGE_NAME": "com.rezoom.application"
     }
   },
   "dependent_plugins": {
@@ -25,9 +19,6 @@
       "PACKAGE_NAME": "com.rezoom.application"
     },
     "cordova-plugin-app-event": {
-      "PACKAGE_NAME": "com.rezoom.application"
-    },
-    "cordova-plugin-file": {
       "PACKAGE_NAME": "com.rezoom.application"
     }
   }

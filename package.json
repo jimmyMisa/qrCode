@@ -11,19 +11,14 @@
   "license": "Apache-2.0",
   "dependencies": {
     "cordova-android": "^6.4.0",
-    "cordova-plugin-android-permissions": "^1.0.0",
     "cordova-plugin-app-event": "^1.2.1",
-    "cordova-plugin-file": "^3.0.0",
-    "cordova-plugin-file-transfer": ">=0.0.1",
     "cordova-plugin-whitelist": "^1.3.3",
     "de.appplant.cordova.plugin.local-notification": "^0.8.5"
   },
   "cordova": {
     "plugins": {
       "cordova-plugin-whitelist": {},
-      "de.appplant.cordova.plugin.local-notification": {},
-      "cordova-plugin-android-permissions": {},
-      "cordova-plugin-file-transfer": {}
+      "de.appplant.cordova.plugin.local-notification": {}
     },
     "platforms": [
       "android"

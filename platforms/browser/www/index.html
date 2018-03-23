@@ -1,134 +1,44 @@
-<script type="text/javascript" src="src/grid.js"></script>
-<script type="text/javascript" src="src/version.js"></script>
-<script type="text/javascript" src="src/detector.js"></script>
-<script type="text/javascript" src="src/formatinf.js"></script>
-<script type="text/javascript" src="src/errorlevel.js"></script>
-<script type="text/javascript" src="src/bitmat.js"></script>
-<script type="text/javascript" src="src/datablock.js"></script>
-<script type="text/javascript" src="src/bmparser.js"></script>
-<script type="text/javascript" src="src/datamask.js"></script>
-<script type="text/javascript" src="src/rsdecoder.js"></script>
-<script type="text/javascript" src="src/gf256poly.js"></script>
-<script type="text/javascript" src="src/gf256.js"></script>
-<script type="text/javascript" src="src/decoder.js"></script>
-<script type="text/javascript" src="src/qrcode.js"></script>
-<script type="text/javascript" src="src/findpat.js"></script>
-<script type="text/javascript" src="src/alignpat.js"></script>
-<script type="text/javascript" src="src/databr.js"></script>
-
-<label>Image File:</label><br/>
-<input type="file" id="imageLoader" name="imageLoader"/>
-<canvas id="imageCanvas"></canvas>
-
-
-
 <script>
+var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
 
-var imageLoader = document.getElementById('imageLoader');
-    imageLoader.addEventListener('change', handleImage, false);
-var canvas = document.getElementById('imageCanvas');
-var ctx = canvas.getContext('2d');
+// Open (or create) the database
+var open = indexedDB.open("MyDatabase", 1);
 
+// Create the schema
+open.onupgradeneeded = function() {
+	alert("first");
+    var db = open.result;
+    var store = db.createObjectStore("MyObjectStore", {keyPath: "id"});
+    var index = store.createIndex("NameIndex", ["name.last", "name.first"]);
+};
 
-function handleImage(e){
-    var reader = new FileReader();
-    reader.onload = function(event){
-        var img = new Image();
-        img.onload = function(){
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img,0,0);
-        }
-        img.src = event.target.result;
-        
-        qrcode.callback = function(data) { alert(data); }
-        console.log(qrcode.decode(event.target.result));
-    }
-    reader.readAsDataURL(e.target.files[0]);     
+open.onsuccess = function() {
+	alert("second");
+    // Start a new transaction
+    var db = open.result;
+    var tx = db.transaction("MyObjectStore", "readwrite");
+    var store = tx.objectStore("MyObjectStore");
+    var index = store.index("NameIndex");
+
+    // Add some data
+    store.put({id: 12345, name: {first: "John", last: "Doe"}, age: 42});
+    store.put({id: 67890, name: {first: "Bob", last: "Smith"}, age: 35});
+    
+    // Query the data
+    var getJohn = store.get(12345);
+    var getBob = index.get(["Smith", "Bob"]);
+
+    getJohn.onsuccess = function() {
+        console.log(getJohn.result.name.first);  // => "John"
+    };
+
+    getBob.onsuccess = function() {
+        console.log(getBob.result.name.first);   // => "Bob"
+    };
+
+    // Close the db when the transaction is done
+    tx.oncomplete = function() {
+        db.close();
+    };
 }
 </script>
-<div id="debuger"></div>
-
-
-
-<br/>
-
-
-<html>
-  <head>
-    <title>FileWriter Example</title>
-
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    <script type="text/javascript" charset="utf-8">
-    var debuger=document.querySelector("#debuger");
-    function debug(smt){
-    	debuger.innerHTML+="<br/>"+smt.toString();
-    }
-
-    // Wait for Cordova to load
-    //
-    document.addEventListener("deviceready", onDeviceReady, false);
-
-    // Cordova is ready
-    //
-    function onDeviceReady() {
-    	debug("device ready");
-        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, gotFS, fail);
-    }
-
-    function gotFS(fileSystem) {
-    	debug("fs ok");
-        fileSystem.root.getFile("kkzlm.txt", {create: true, exclusive: false}, gotFileEntry, fail);
-    }
-
-    function gotFileEntry(fileEntry) {
-    	debug("creating file");
-        fileEntry.createWriter(gotFileWriter, fail);
-    }
-
-    function gotFileWriter(writer) {
-        writer.onwriteend = function(evt) {
-    		debug("wrotten");
-            console.log("1 contents of file now 'some sample text'");
-            //writer.truncate(11);  
-            writer.onwriteend = function(evt) {
-                console.log("2 contents of file now 'some sample'");
-                writer.seek(4);
-                writer.write("3 different text");
-                writer.onwriteend = function(evt){
-                    console.log("4 contents of file now 'some different text'");
-                }
-            };
-        };
-        writer.write("5 some sample text");
-        
-        
-    	debug("writting");
-        window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fs) {
-            fs.root.getFile("kkzl.txt", {read: true}, function(fe)
-            {
-                fe.file(function(f) {
-                    var reader = new FileReader();
-                    reader.onloadend = function(evt) {
-                        // do sth with the reader.result data    
-                        alert(reader.result);
-                    }
-                    reader.readAsText(f);
-                }, fail);
-            }, fail);
-        }, fail);
-        
-    }
-
-    function fail(error) {
-        console.log(error.code);
-    }
-
-    </script>
-  </head>
-  <body>
-    <h1>Example</h1>
-    <p>Write File</p>
-  </body>
-</html>
-
