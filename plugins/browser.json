@@ -23,9 +23,6 @@
     },
     "cordova-plugin-app-event": {
       "PACKAGE_NAME": "com.rezoom.application"
-    },
-    "cordova-plugin-compat": {
-      "PACKAGE_NAME": "com.rezoom.application"
     }
   }
 }

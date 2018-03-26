@@ -79,8 +79,7 @@ module.exports.metadata =
     "cordova-plugin-device": "2.0.1",
     "cordova-plugin-app-event": "1.2.1",
     "de.appplant.cordova.plugin.local-notification": "0.8.5",
-    "cordova-plugin-compat": "1.2.0",
-    "cordova-plugin-camera": "2.4.1"
+    "cordova-plugin-camera": "4.0.2"
 }
 // BOTTOM OF METADATA
 });

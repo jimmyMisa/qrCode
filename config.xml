@@ -24,7 +24,6 @@
         <allow-intent href="itms-apps:*" />
     </platform>
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
-    <engine name="android" spec="^6.4.0" />
-    <plugin name="cordova-plugin-camera" spec="^2.4.1" />
-    <plugin name="Camera" value="org.apache.cordova.CameraLauncher" />
+    <plugin name="cordova-plugin-camera" spec="^4.0.2" />
+    <engine name="android" spec="~7.0.0" />
 </widget>
