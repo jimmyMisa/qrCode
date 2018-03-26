@@ -12,9 +12,6 @@
     },
     "de.appplant.cordova.plugin.local-notification": {
       "PACKAGE_NAME": "com.rezoom.application"
-    },
-    "cordova-plugin-camera": {
-      "PACKAGE_NAME": "com.rezoom.application"
     }
   },
   "dependent_plugins": {
@@ -22,9 +19,6 @@
       "PACKAGE_NAME": "com.rezoom.application"
     },
     "cordova-plugin-device": {
-      "PACKAGE_NAME": "com.rezoom.application"
-    },
-    "cordova-plugin-compat": {
       "PACKAGE_NAME": "com.rezoom.application"
     }
   }
