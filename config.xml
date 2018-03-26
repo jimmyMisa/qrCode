@@ -28,6 +28,4 @@
     <engine name="android" spec="^6.4.0" />
     <plugin name="cordova-plugin-whitelist" spec="^1.3.3" />
     <plugin name="de.appplant.cordova.plugin.local-notification" spec="^0.8.5" />
-    <plugin name="cordova-plugin-camera" spec="^2.4.1" />
-    <plugin name="Camera" />
 </widget>
