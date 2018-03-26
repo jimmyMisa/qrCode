@@ -25,6 +25,6 @@
     </platform>
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
     <engine name="android" spec="^6.4.0" />
-    <plugin name="Camera" value="org.apache.cordova.CameraLauncher" />
     <plugin name="cordova-plugin-camera" spec="^2.4.1" />
+    <plugin name="Camera" value="org.apache.cordova.CameraLauncher" />
 </widget>
