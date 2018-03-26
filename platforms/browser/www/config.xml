@@ -16,5 +16,6 @@
     <allow-intent href="sms:*" />
     <allow-intent href="mailto:*" />
     <allow-intent href="geo:*" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <preference name="AndroidPersistentFileLocation" value="Compatibility" />
 </widget>

@@ -3,7 +3,7 @@
   <head>
     <title>Capture Photo</title>
     <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1"/>
-    <!-- <script type="text/javascript" charset="utf-8" src="js/phonegap.js"></script> -->
+    <script type="text/javascript" charset="utf-8" src="js/phonegap.js"></script>
     <script type="text/javascript" charset="utf-8">
     var pictureSource;   // picture source
     var destinationType; // sets the format of returned value 
@@ -13,6 +13,7 @@
     // PhoneGap is ready to be used!
     //
     function onDeviceReady() {
+    	alert(navigator.camera);
         pictureSource=navigator.camera.PictureSourceType;
         destinationType=navigator.camera.DestinationType;
     }
