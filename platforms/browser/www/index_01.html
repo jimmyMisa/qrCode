@@ -1,0 +1,126 @@
+
+<label>Image File:</label><br/>
+<input type="file" id="imageLoader" name="imageLoader"/>
+<canvas id="imageCanvas"></canvas>
+
+
+
+
+
+<script>
+var indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB || window.shimIndexedDB;
+
+// Open (or create) the database
+
+var db = null;
+var tx = null;
+var store = null;
+var index = null;
+var open = indexedDB.open("MyDatabase", 1);
+
+// Create the schema
+open.onupgradeneeded = function() {
+	alert("first");
+    db = open.result;
+    store = db.createObjectStore("MyObjectStore", {keyPath: "id"});
+    index = store.createIndex("NameIndex", ["name.last", "name.first"]);
+};
+
+open.onsuccess = function() {
+	alert("second");
+    // Start a new transaction
+    db = open.result;
+    tx = db.transaction("MyObjectStore", "readwrite");
+    store = tx.objectStore("MyObjectStore");
+    index = store.index("NameIndex");
+
+    // Add some data
+    store.put({id: 12345, name: {first: "John", last: "Doe"}, age: 42});
+    store.put({id: 67890, name: {first: "Bob", last: "Smith"}, age: 35});
+    
+    // Query the data
+    var getJohn = store.get(3);
+    var getBob = index.get(["Smith", "Bob"]);
+
+    getJohn.onsuccess = function() {
+        console.log(getJohn.result);  // => "John"
+    };
+
+    getBob.onsuccess = function() {
+        console.log(getBob.result.name.first);   // => "Bob"
+    };
+
+    // Close the db when the transaction is done
+    tx.oncomplete = function() {
+        db.close();
+    };
+}
+</script>
+
+
+
+<script>
+
+var imageLoader = document.getElementById('imageLoader');
+    imageLoader.addEventListener('change', handleImage, false);
+var canvas = document.getElementById('imageCanvas');
+var ctx = canvas.getContext('2d');
+var vid=1;
+
+
+function handleImage(e){
+
+	var reader = new FileReader();
+	reader.onload = function(event){
+		var db = null;
+		var tx = null;
+		var store = null;
+		var index = null;
+		var open = indexedDB.open("MyDatabase", 1);
+		
+		open.onupgradeneeded = function() {
+			alert("first");
+			db = open.result;
+			store = db.createObjectStore("MyObjectStore", {keyPath: "id"});
+			index = store.createIndex("NameIndex", ["name.last", "name.first"]);
+		};
+		
+
+		open.onsuccess = function() {
+			
+			// Start a new transaction
+			db = open.result;
+			tx = db.transaction("MyObjectStore", "readwrite");
+			store = tx.objectStore("MyObjectStore");
+			index = store.index("NameIndex");
+			
+			vid++;
+			var img = new Image();
+			img.onload = function(){
+				canvas.width = img.width;
+				canvas.height = img.height;
+				ctx.drawImage(img,0,0);
+			}
+			img.src = event.target.result;
+			for(var i=0;i<100;i++){
+				vid++;
+				store.put({id: vid, name: {first: "John", last: img.src}, age: 42});
+				console.log(vid);
+			}
+			var getid = store.get(vid)
+
+			document.querySelector("#gomo").innerHTML=vid;
+			getid.onsuccess = function() {
+				console.log(getid.result);
+			};
+		
+			tx.oncomplete = function() {
+				db.close();
+			};
+		}
+				
+	} 
+	reader.readAsDataURL(e.target.files[0]);   
+}
+</script>
+<div id="gomo"></div>
