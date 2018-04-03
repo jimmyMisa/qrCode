@@ -19,27 +19,103 @@
 var app = {
     // Application Constructor
     initialize: function() {
-        document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+        this.bindEvents();
     },
-
+    // Bind Event Listeners
+    //
+    // Bind any events that are required on startup. Common events are:
+    // 'load', 'deviceready', 'offline', and 'online'.
+    bindEvents: function() {
+        document.addEventListener('deviceready', this.onDeviceReady, false);
+    },
     // deviceready Event Handler
     //
-    // Bind any cordova events here. Common events are:
-    // 'pause', 'resume', etc.
+    // The scope of 'this' is the event. In order to call the 'receivedEvent'
+    // function, we must explicitly call 'app.receivedEvent(...);'
     onDeviceReady: function() {
-        this.receivedEvent('deviceready');
+        app.receivedEvent('deviceready');
     },
-
     // Update DOM on a Received Event
     receivedEvent: function(id) {
-        var parentElement = document.getElementById(id);
-        var listeningElement = parentElement.querySelector('.listening');
-        var receivedElement = parentElement.querySelector('.received');
+        document.getElementById('play').addEventListener('click', (function() {
+            this.onPlay();
+        }).bind(this), false);
+        document.getElementById('stop').addEventListener('click', (function() {
+            this.onStop();
+        }).bind(this), false);
+        document.getElementById('switch').addEventListener('click', (function() {
+            this.onSwitch();
+        }).bind(this), false);
+        document.getElementById('torch').addEventListener('click', (function() {
+            this.onTorch();
+        }).bind(this), false);
 
-        listeningElement.setAttribute('style', 'display:none;');
-        receivedElement.setAttribute('style', 'display:block;');
-
-        console.log('Received Event: ' + id);
+        if (window.plugin.CanvasCamera) {
+          window.plugin.CanvasCamera.initialize({
+                fullsize: window.document.getElementById('fullsize'),
+                thumbnail: window.document.getElementById('thumbnail')
+          });
+        }
+    },
+    onPlay: function() {
+        console.log('play');
+        if (window.plugin.CanvasCamera) {
+           var options = {
+              canvas: {
+                width: 640,
+                height: 480
+              },
+              capture: {
+                width: 640,
+                height: 480
+              },
+              use: 'file',
+              fps: 30,
+              flashMode: this.flash,
+              hasThumbnail: true,
+              thumbnailRatio: 1/6,
+              cameraFacing: this.position
+          };
+          window.plugin.CanvasCamera.start(options, function(error) {
+            console.log('[CanvasCamera start]', 'error', error);
+          }, function(data) {
+            // console.log('[CanvasCamera start]', 'data', data);
+          });
+        }
+    },
+    flash: false,
+    onTorch: function() {
+        console.log('torch');
+        if (window.plugin.CanvasCamera) {
+            this.flash = (this.flash) ? false : true;
+            window.plugin.CanvasCamera.flashMode(this.flash, function(error) {
+              console.log('[CanvasCamera flashMode]', 'error', error);
+            }, function(data) {
+              console.log('[CanvasCamera flashMode]', 'data', data);
+            });
+        }
+    },
+    position: 'back',
+    onSwitch: function() {
+        console.log('switch');
+        if (window.plugin.CanvasCamera) {
+            this.position = (this.position === 'front') ? 'back' : 'front';
+            window.plugin.CanvasCamera.cameraPosition(this.position, function(error) {
+                console.log('[CanvasCamera cameraPosition]', error);
+            }, function(data) {
+                console.log('[CanvasCamera cameraPosition]', 'data', data);
+            });
+        }
+    },
+    onStop: function() {
+        console.log('stop');
+        if (window.plugin.CanvasCamera) {
+            window.plugin.CanvasCamera.stop(function(error) {
+                console.log('[CanvasCamera stop]', 'error', error);
+            }, function(data) {
+                console.log('[CanvasCamera stop]', 'data', data);
+            });
+        }
     }
 };
 
