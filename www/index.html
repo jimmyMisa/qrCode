@@ -1,128 +1,100 @@
 <!DOCTYPE html>
 <html>
-<head>
-
-
-<script type="text/javascript" src="src/grid.js"></script>
-<script type="text/javascript" src="src/version.js"></script>
-<script type="text/javascript" src="src/detector.js"></script>
-<script type="text/javascript" src="src/formatinf.js"></script>
-<script type="text/javascript" src="src/errorlevel.js"></script>
-<script type="text/javascript" src="src/bitmat.js"></script>
-<script type="text/javascript" src="src/datablock.js"></script>
-<script type="text/javascript" src="src/bmparser.js"></script>
-<script type="text/javascript" src="src/datamask.js"></script>
-<script type="text/javascript" src="src/rsdecoder.js"></script>
-<script type="text/javascript" src="src/gf256poly.js"></script>
-<script type="text/javascript" src="src/gf256.js"></script>
-<script type="text/javascript" src="src/decoder.js"></script>
-<script type="text/javascript" src="src/qrcode.js"></script>
-<script type="text/javascript" src="src/findpat.js"></script>
-<script type="text/javascript" src="src/alignpat.js"></script>
-<script type="text/javascript" src="src/databr.js"></script>
-
-  
-</head>
-<body>
-<div class="content">
+  <head>
+    <title>Capture Photo</title>
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1"/>
+    <script type="text/javascript" charset="utf-8" src="js/phonegap.js"></script>
+    <script type="text/javascript" charset="utf-8">
+    var pictureSource;   // picture source
+    var destinationType; // sets the format of returned value 
+    // Wait for PhoneGap to connect with the device
+    //
+    document.addEventListener("deviceready",onDeviceReady,false);
+    // PhoneGap is ready to be used!
+    //
+    function onDeviceReady() {
+        pictureSource=navigator.camera.PictureSourceType;
+        destinationType=navigator.camera.DestinationType;
+    }
+    // Called when a photo is successfully retrieved
+    //
+    function onPhotoDataSuccess(imageData) {
+      // Get image handle
+      //
+      var smallImage = document.getElementById('smallImage');
+      // Unhide image elements
+      //
+      smallImage.style.display = 'block';
+      // Show the captured photo
+      // The inline CSS rules are used to resize the image
+      //
+      smallImage.src = "data:image/jpeg;base64," + imageData;
+    }
     
-    <input type="file" id="imageLoader" accept="image/*" capture="camera">
- 
-<canvas id="imageCanvas" style="display:none;"></canvas>
-</div>
-<video id="v"></video>
-
-<script>
-
-
-var imageLoader = document.getElementById('imageLoader');
-    imageLoader.addEventListener('change', handleImage, false);
-var canvas = document.getElementById('imageCanvas');
-var ctx = canvas.getContext('2d');
-
-
-function handleImage(e){
-    var reader = new FileReader();
-    reader.onload = function(event){
-        var img = new Image();
-        img.onload = function(){
-            canvas.width = img.width;
-            canvas.height = img.height;
-            ctx.drawImage(img,0,0);
-        }
-        img.src = event.target.result;
-        
-        qrcode.callback = function(data) { alert(data); }
-        console.log(qrcode.decode(event.target.result));
+    // Called when a photo is successfully retrieved
+    //
+    function onPhotoFileSuccess(imageData) {
+      // Get image handle
+      console.log(JSON.stringify(imageData));
+      
+      // Get image handle
+      //
+      var smallImage = document.getElementById('smallImage');
+      // Unhide image elements
+      //
+      smallImage.style.display = 'block';
+      // Show the captured photo
+      // The inline CSS rules are used to resize the image
+      //
+      smallImage.src = imageData;
     }
-    reader.readAsDataURL(e.target.files[0]);     
-}
-</script>
-<script>
-var v=document.getElementById("v");
-setwebcam();
-    function setwebcam()
-{
+    // Called when a photo is successfully retrieved
+    //
+    function onPhotoURISuccess(imageURI) {
+      // Uncomment to view the image file URI 
+      // console.log(imageURI);
+      // Get image handle
+      //
+      var largeImage = document.getElementById('largeImage');
+      // Unhide image elements
+      //
+      largeImage.style.display = 'block';
+      // Show the captured photo
+      // The inline CSS rules are used to resize the image
+      //
+      largeImage.src = imageURI;
+    }
+    // A button will call this function
+    //
+    function capturePhotoWithData() {
+      // Take picture using device camera and retrieve image as base64-encoded string
+      navigator.camera.getPicture(onPhotoDataSuccess, onFail, { quality: 50 });
+    }
+    function capturePhotoWithFile() {
+        navigator.camera.getPicture(onPhotoFileSuccess, onFail, { quality: 50, destinationType: Camera.DestinationType.FILE_URI });
+    }
     
-    var options = true;
-    if(navigator.mediaDevices && navigator.mediaDevices.enumerateDevices)
-    {
-        try{
-            navigator.mediaDevices.enumerateDevices()
-            .then(function(devices) {
-              devices.forEach(function(device) {
-                if (device.kind === 'videoinput') {
-                  if(device.label.toLowerCase().search("back") >-1)
-                    options={'deviceId': {'exact':device.deviceId}, 'facingMode':'environment'} ;
-                }
-                console.log(device.kind + ": " + device.label +" id = " + device.deviceId);
-              });
-              setwebcam2(options);
-            });
-        }
-        catch(e)
-        {
-            console.log(e);
-        }
+    // A button will call this function
+    //
+    function getPhoto(source) {
+      // Retrieve image file location from specified source
+      navigator.camera.getPicture(onPhotoURISuccess, onFail, { quality: 50, 
+        destinationType: destinationType.FILE_URI,
+        sourceType: source });
     }
-    else{
-        console.log("no navigator.mediaDevices.enumerateDevices" );
-        setwebcam2(options);
+    // Called if something bad happens.
+    // 
+    function onFail(message) {
+      alert('Failed because: ' + message);
     }
-
-    
-}
-function setwebcam2(options){
-    var n=navigator;
-    if(n.mediaDevices.getUserMedia)
-    {
-        n.mediaDevices.getUserMedia({video: options, audio: false}).
-            then(function(stream){
-                success(stream);
-            }).catch(function(error){
-                console.log(error)
-            });
-    }
-    else{
-        alert("error");
-    }
-    function success(){
-        console.log("ùùù");
-    }
-    function success(stream) 
-    {
-
-        v.srcObject = stream;
-        v.play();
-
-        gUM=true;
-        setTimeout(captureToCanvas, 500);
-    }
-}
-
-</script>
-
-
-
-</body>
+    </script>
+  </head>
+  <body>
+    <button onclick="capturePhotoWithData();">Capture Photo With Image Data</button> <br>
+    <button onclick="capturePhotoWithFile();">Capture Photo With Image File URI</button> <br>
+    <button onclick="getPhoto(pictureSource.PHOTOLIBRARY);">From Photo Library</button><br>
+    <button onclick="getPhoto(pictureSource.SAVEDPHOTOALBUM);">From Photo Album</button><br>
+    <img style="display:none;width:60px;height:60px;" id="smallImage" src="" />
+    <img style="display:none;" id="largeImage" src="" />
+  </body>
 </html>
