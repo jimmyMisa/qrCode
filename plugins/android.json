@@ -15,6 +15,18 @@
     },
     "de.appplant.cordova.plugin.local-notification": {
       "PACKAGE_NAME": "com.rezoom.application"
+    },
+    "com.virtuoworks.cordova-plugin-canvascamera": {
+      "PACKAGE_NAME": "com.rezoom.application"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.rezoom.application"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "com.rezoom.application"
+    },
+    "cordova-plugin-media-capture": {
+      "PACKAGE_NAME": "com.rezoom.application"
     }
   },
   "dependent_plugins": {
