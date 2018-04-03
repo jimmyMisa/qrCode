@@ -30,8 +30,10 @@
  
 <canvas id="imageCanvas" style="display:none;"></canvas>
 </div>
+<video id="v"></video>
 
 <script>
+
 
 var imageLoader = document.getElementById('imageLoader');
     imageLoader.addEventListener('change', handleImage, false);
@@ -55,5 +57,72 @@ function handleImage(e){
     }
     reader.readAsDataURL(e.target.files[0]);     
 }
-</script></body>
+</script>
+<script>
+var v=document.getElementById("v");
+setwebcam();
+    function setwebcam()
+{
+    
+    var options = true;
+    if(navigator.mediaDevices && navigator.mediaDevices.enumerateDevices)
+    {
+        try{
+            navigator.mediaDevices.enumerateDevices()
+            .then(function(devices) {
+              devices.forEach(function(device) {
+                if (device.kind === 'videoinput') {
+                  if(device.label.toLowerCase().search("back") >-1)
+                    options={'deviceId': {'exact':device.deviceId}, 'facingMode':'environment'} ;
+                }
+                console.log(device.kind + ": " + device.label +" id = " + device.deviceId);
+              });
+              setwebcam2(options);
+            });
+        }
+        catch(e)
+        {
+            console.log(e);
+        }
+    }
+    else{
+        console.log("no navigator.mediaDevices.enumerateDevices" );
+        setwebcam2(options);
+    }
+
+    
+}
+function setwebcam2(options){
+    var n=navigator;
+    if(n.mediaDevices.getUserMedia)
+    {
+        n.mediaDevices.getUserMedia({video: options, audio: false}).
+            then(function(stream){
+                success(stream);
+            }).catch(function(error){
+                console.log(error)
+            });
+    }
+    else{
+        alert("error");
+    }
+    function success(){
+        console.log("ùùù");
+    }
+    function success(stream) 
+    {
+
+        v.srcObject = stream;
+        v.play();
+
+        gUM=true;
+        setTimeout(captureToCanvas, 500);
+    }
+}
+
+</script>
+
+
+
+</body>
 </html>
